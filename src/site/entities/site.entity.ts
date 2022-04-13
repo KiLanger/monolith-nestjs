@@ -7,6 +7,8 @@ export class Site {
   _id: string;
 
   @Column()
+  stationId: string;
+  @Column()
   name: string;
   @Column()
   customer: string;

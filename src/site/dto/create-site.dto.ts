@@ -6,12 +6,16 @@ import {
   IsIn,
   ValidateNested,
   IsNumberString,
+  IsMongoId,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export type ProducerType = 'Solar' | 'Wind' | 'Water';
 
 export class CreateSiteDto {
+  @IsNotEmpty()
+  @IsMongoId()
+  stationId: string;
   @IsNotEmpty()
   @IsString()
   name: string;

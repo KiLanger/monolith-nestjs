@@ -31,7 +31,7 @@ export class SiteService {
   }
 
   update(id: string, updateSiteDto: UpdateSiteDto) {
-    return `This action updates a #${id} site`;
+    return this.siteRepository.updateSite(id, updateSiteDto);
   }
 
   async remove(id: string) {

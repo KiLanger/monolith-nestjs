@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { EntityRepository, MongoRepository } from 'typeorm';
 import { CreateSiteDto } from './dto/create-site.dto';
 import { GetSiteFilterDto } from './dto/get-site-filter.dto';
@@ -7,9 +8,10 @@ import { Site } from './entities/site.entity';
 @EntityRepository(Site)
 export class SiteRepository extends MongoRepository<Site> {
   async createSite(createSiteDto: CreateSiteDto): Promise<Site> {
-    const { name, customer, peakPower, producers, consumers } = createSiteDto;
+    const { stationId, name, customer, peakPower, producers, consumers } =
+      createSiteDto;
 
-    const site = this.create({ name, customer, peakPower });
+    const site = this.create({ stationId, name, customer, peakPower });
 
     if (producers && producers.length) {
       site.producers = producers;
@@ -34,5 +36,18 @@ export class SiteRepository extends MongoRepository<Site> {
     const sites = await this.find(options);
 
     return sites;
+  }
+
+  async updateSite(id: string, updateSiteDto: UpdateSiteDto): Promise<Site> {
+    const toUpdate = await this.findOne(id);
+
+    if (!toUpdate) {
+      throw new NotFoundException(`Site with ID "${id}" not found`);
+    }
+
+    const updated = Object.assign(toUpdate, updateSiteDto);
+    const site = await this.save(updated);
+
+    return site;
   }
 }
