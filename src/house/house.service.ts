@@ -17,7 +17,7 @@ export class HouseService {
   }
 
   async getHouseById(id: string): Promise<House> {
-    const found = await this.houseRepository.findOneBy(id);
+    const found = await this.houseRepository.findOne(id);
 
     if (!found) {
       throw new NotFoundException(`House with ID "${id}" not found`);

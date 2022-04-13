@@ -33,7 +33,7 @@ export class HouseController {
   }
 
   @Delete('/:id')
-  deleteHuouse(@Param('id') id: string): Promise<void> {
+  deleteHouse(@Param('id') id: string): Promise<void> {
     return this.houseService.deleteHouse(id);
   }
 
@@ -42,6 +42,6 @@ export class HouseController {
     @Param('id') id: string,
     @Body() createHouseDto: CreateHouseDto,
   ): Promise<House> {
-    return this.updateHouse(id, createHouseDto);
+    return this.houseService.updateHouse(id, createHouseDto);
   }
 }
